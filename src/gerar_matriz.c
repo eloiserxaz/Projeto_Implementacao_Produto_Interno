@@ -1,3 +1,5 @@
+#include <inttypes.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -8,8 +10,8 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    int linhas = atoi(argv[1]);
-    int colunas = atoi(argv[2]);
+    uint64_t linhas = strtoull(argv[1], NULL, 10);
+    uint64_t colunas = strtoull(argv[2], NULL, 10);
     char *filename = argv[3];
 
     FILE *f = fopen(filename, "wb");
@@ -18,22 +20,35 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    // Escreve as dimensoes no inicio do ficheiro binario
-    fwrite(&linhas, sizeof(int), 1, f);
-    fwrite(&colunas, sizeof(int), 1, f);
+    if (fwrite(&linhas, sizeof(uint64_t), 1, f) != 1 ||
+        fwrite(&colunas, sizeof(uint64_t), 1, f) != 1) {
+        fprintf(stderr, "Erro ao escrever cabecalho.\n");
+        fclose(f);
+        return 1;
+    }
 
-    srand(time(NULL));
-    int total = linhas * colunas;
+    srand((unsigned int)time(NULL));
+    uint64_t total = linhas * colunas;
     float *dados = malloc(total * sizeof(float));
+    if (!dados) {
+        fprintf(stderr, "Erro: memoria insuficiente.\n");
+        fclose(f);
+        return 1;
+    }
 
-    for (int i = 0; i < total; i++) {
+    for (uint64_t i = 0; i < total; i++) {
         dados[i] = (float)rand() / (float)RAND_MAX;
     }
 
-    fwrite(dados, sizeof(float), total, f);
+    if (fwrite(dados, sizeof(float), total, f) != total) {
+        fprintf(stderr, "Erro ao escrever payload.\n");
+        free(dados);
+        fclose(f);
+        return 1;
+    }
 
     free(dados);
     fclose(f);
-    printf("Matriz %dx%d gerada com sucesso em: %s\n", linhas, colunas, filename);
+    printf("Matriz %" PRIu64 "x%" PRIu64 " gerada com sucesso em: %s\n", linhas, colunas, filename);
     return 0;
 }
