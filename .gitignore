@@ -1,0 +1,12 @@
+# Executáveis e pastas de binários
+bin/
+csv2bin
+bin2csv
+matmul
+matmul_*
+
+# Arquivos de dados de teste e binários temporários
+*.bin
+*.csv
+!.keep
+
