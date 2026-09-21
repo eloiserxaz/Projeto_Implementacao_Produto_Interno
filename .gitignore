@@ -8,5 +8,6 @@ matmul_*
 # Arquivos de dados de teste e binários temporários
 *.bin
 *.csv
+!benchmark_eloise.csv
 !.keep
 
