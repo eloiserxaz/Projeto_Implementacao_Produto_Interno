@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <unistd.h>
 #include <stdlib.h>
 #include <time.h>
 
@@ -21,7 +22,7 @@ int main(int argc, char *argv[]) {
     // Escreve o cabecalho M,N esperado pelo csv2bin
     fprintf(f, "%d,%d\n", linhas, colunas);
 
-    srand(time(NULL));
+    srand(time(NULL) + getpid());
 
     for (int i = 0; i < linhas; i++) {
         for (int j = 0; j < colunas; j++) {
