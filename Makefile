@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -std=c99 -D_GNU_SOURCE -D_restrict_=restrict
+CFLAGS = -Wall -Wextra -std=c99 -D_GNU_SOURCE
 INCLUDES = -Iinclude
 
 SRC = src/matmul.c
@@ -19,7 +19,7 @@ $(BIN_DIR):
 	mkdir -p $(BIN_DIR)
 
 $(TARGET_BASE): $(SRC)
-	$(CC) $(CFLAGS) $(INCLUDES) -O0 $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDES) -O0 -g0 $< -o $@
 
 $(TARGET_O2): $(SRC)
 	$(CC) $(CFLAGS) $(INCLUDES) -O2 $< -o $@
@@ -28,7 +28,7 @@ $(TARGET_O3): $(SRC)
 	$(CC) $(CFLAGS) $(INCLUDES) -O3 $< -o $@
 
 $(TARGET_FAST): $(SRC)
-	$(CC) $(CFLAGS) $(INCLUDES) -O3 -march=native -ffast-math $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDES) -O3 -march=native -ffast-math -funroll-loops $< -o $@
 
 $(CSV2BIN): src/csv2bin.c
 	$(CC) $(CFLAGS) $(INCLUDES) $< -o $@

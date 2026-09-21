@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
     for (int i = 0; i < linhas; i++) {
         for (int j = 0; j < colunas; j++) {
             float val = (float)rand() / (float)RAND_MAX;
-            fprintf(f, "%.4f%s", val, (j == colunas - 1) ? "" : ",");
+            fprintf(f, "%.6f%s", val, (j == colunas - 1) ? "" : ",");
         }
         fprintf(f, "\n");
     }
