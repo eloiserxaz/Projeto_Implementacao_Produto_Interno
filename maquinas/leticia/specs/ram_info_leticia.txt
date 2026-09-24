@@ -1,2 +1,6 @@
-mensagem errada
+leticiaduarte@leticia-laptop:~$ free -h
+               total       usada       livre    compart.  buff/cache  disponível
+Mem.:          6.9Gi       4.2Gi       1.2Gi       195Mi       1.4Gi       2.7Gi
+Swap:          4.0Gi       779Mi       3.2Gi
+
 
